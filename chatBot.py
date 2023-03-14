@@ -1,9 +1,15 @@
 import os
 import discord
+from dotenv import load_dotenv
 from discord.ext import commands
 import openai
 import requests
 from discord.ext import commands
+
+load_dotenv()
+
+DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
+OPENAI_APIKEY = os.getenv("OPENAI_APIKEY")
 
 intents = discord.Intents.default()
 intents.members = True
@@ -19,8 +25,7 @@ bot = commands.Bot(command_prefix=commands.when_mentioned_or('!'), intents=inten
 
 
 # Set up OpenAI API key
-openai.api_key = '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'
-
+openai.api_key = OPENAI_APIKEY
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
@@ -65,4 +70,4 @@ async def analyze_photo(ctx):
     else:
         await ctx.send("Please attach a photo to your message.")
 
-bot.run('MTA4NTI5NjI4ODY4NzQ3Njc5OQ.GbrQhB.6sWsD0NoRIgx7w0HHgmLXAjSM5CYxMHWjomRC8')
+bot.run(DISCORD_TOKEN)
